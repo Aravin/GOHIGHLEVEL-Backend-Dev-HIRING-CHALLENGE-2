@@ -11,7 +11,7 @@ export async function setupWallet(req: Request, res: Response) {
     const newWallet = {
         balance: (body.balance || 0).toFixed(4),
         name: body.name,
-        date: new Date().toUTCString(),
+        date: new Date().toISOString(),
     }
 
     // connect to DB
