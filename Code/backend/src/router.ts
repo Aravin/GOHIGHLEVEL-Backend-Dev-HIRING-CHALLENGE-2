@@ -1,6 +1,7 @@
 import { Router, Request, Response} from 'express';
 import { walletLookup } from './api/lookup';
 import { setupWallet } from './api/setup';
+import { walletTransact } from './api/transact';
 
 export const router = Router(); 
 
@@ -14,11 +15,7 @@ router.post('/setup', async (req: Request, res: Response) => {
 });
 
 router.post('/transact/:walletId', async (req: Request, res: Response) => {
-    return res.send('TODO: Implement');
-});
-
-router.post('/transact/:walletId', (req: Request, res: Response) => {
-    res.send('TODO: Implement');
+    return await walletTransact(req, res);
 });
 
 router.get('/transactions', (req: Request, res: Response) => {

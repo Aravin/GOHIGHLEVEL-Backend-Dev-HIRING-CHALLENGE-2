@@ -6,8 +6,6 @@ export async function walletLookup(req: Request, res: Response) {
 
     const walletId = req.params.walletId;
 
-    console.log(walletId);
-
     // basic data check
     if (!walletId) return res.status(400).send({response: 'Wallet ID is required'});
 
