@@ -1,4 +1,5 @@
 import { Router, Request, Response} from 'express';
+import { setupWallet } from './api/setup';
 
 export const router = Router(); 
 
@@ -7,8 +8,9 @@ router.get('/health', (req: Request, res: Response) => {
     return res.send('Wallet Service is Running!');
 });
 
-router.post('/setup', (req: Request, res: Response) => {
-    return res.send('TODO: Implement');
+router.post('/setup', async (req: Request, res: Response) => {
+    console.log(req.body);
+    return await setupWallet(req, res);
 });
 
 router.post('/transact/:walletId', (req: Request, res: Response) => {
