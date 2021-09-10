@@ -26,7 +26,7 @@ function TransactionPage() {
         data.amount = data.amount * -1;
       }
 
-      axois.post(`http://localhost:3001/v1/transact/${wallet}`, data)
+      axois.post(`${process.env.NEXT_PUBLIC_API}/transact/${wallet}`, data)
         .then((res: any) => {
           console.log(res);
           if (process.browser) {

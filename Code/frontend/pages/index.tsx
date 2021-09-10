@@ -18,7 +18,7 @@ const Home: NextPage = () => {
     if (data.balance || data.name) {
       setError('');
 
-      axois.post('http://localhost:3001/v1/setup', data)
+      axois.post(`${process.env.NEXT_PUBLIC_API}/setup`, data)
         .then((res) => {
           if (process.browser) { 
             localStorage.setItem('walletAccount', JSON.stringify(res.data));

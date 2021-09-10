@@ -37,7 +37,7 @@ function HistoryPage() {
       setBalance(walletAccount.balance);
       setWallet(walletAccount.transactionId);
 
-      axios.get(`http://localhost:3001/v1/transactions?walletId=${walletAccount.transactionId}`)
+      axios.get(`${process.env.NEXT_PUBLIC_API}/transactions?walletId=${walletAccount.transactionId}`)
         .then((res: any) => {
           console.log(res);
           setTransaction(res.data);
