@@ -39,13 +39,14 @@ export async function walletTransact(req: Request, res: Response) {
                     $set:
                     {
                         balance: updatedBalance.toFixed(4),
+                        totalTransactions: (existingWallet.totalTransactions || 0) + 1,
                         modifiedDate: new Date().toISOString(),
                     }
                 });
 
         // insert new transaction
         const transactionInfo = {
-            amount: body.amount.toFixed(4),
+            amount: parseFloat(body.amount).toFixed(4),
             description: body.description,
             walletId: walletId,
             balance: updatedBalance.toFixed(4),

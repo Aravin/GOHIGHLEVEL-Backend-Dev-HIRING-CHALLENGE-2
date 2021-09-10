@@ -6,7 +6,7 @@ export async function getWalletTransaction(req: Request, res: Response) {
 
     const walletId = req.query.walletId;
     const skip = parseInt(req.query.skip + '', 10) || 0;
-    const limit = parseInt(req.query.limit + '', 10) || 5;
+    const limit = parseInt(req.query.limit + '', 10) || 100;
 
     // basic data check
     if (!walletId) return res.status(400).send({response: 'Wallet ID is required'});
@@ -22,17 +22,13 @@ export async function getWalletTransaction(req: Request, res: Response) {
         const walletCollection = await db.db("wallet").collection("accounts");
         const transCollection = await db.db("wallet").collection("transactions");
 
-        console.log(walletId);
-
         // check if wallet already exits
-        const transactionList = await transCollection.find({walletId: walletId})
+        const transactionList = await transCollection.find({walletId: walletId })
             .sort({createdDate: 'desc'})
             .skip(skip)
             .limit(limit)
             .toArray()
             ;
-
-        console.log(transactionList);
 
         // return failure, if already exists
         if (!transactionList && transactionList !== []) return res.status(400).send({response: 'Transaction Not Found'}); 

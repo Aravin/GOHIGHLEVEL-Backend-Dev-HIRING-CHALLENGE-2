@@ -7,7 +7,6 @@ import { getWalletTransaction } from './api/transactions';
 export const router = Router(); 
 
 router.get('/health', (req: Request, res: Response) => {
-    console.log('health');
     return res.send('Wallet Service is Running!');
 });
 

@@ -9,8 +9,9 @@ export async function setupWallet(req: Request, res: Response) {
     if (!body.name) return res.status(400).send({response: 'Name is required to create wallet'});
 
     const newWallet = {
-        balance: (body.balance || 0.0000).toFixed(4),
+        balance: (parseFloat(body.balance) || 0.0000).toFixed(4),
         name: body.name,
+        totalTransactions: 0,
         createdDate: new Date().toISOString(),
     }
 
