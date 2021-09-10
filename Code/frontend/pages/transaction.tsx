@@ -73,7 +73,7 @@ function TransactionPage() {
                 <input type="number" step=".0001" {...register("amount", { required: true })} className="block w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none input-primary text-gray-700" placeholder="Amount" />
                 {errors.amount && <span className="text-red-500 pb-2">Transaction Amount is required</span>}
                 <div className="block">
-                  <input type="submit" className="w-full px-3 py-4 font-medium text-white bg-blue-600 rounded-lg" value="Complete the Transaction" />
+                  <input type="submit" className="w-full px-3 py-4 font-medium text-white bg-blue-600 rounded-lg cursor-pointer" value="Complete the Transaction" />
                 </div>
               </form>
               <div className="mt-4">

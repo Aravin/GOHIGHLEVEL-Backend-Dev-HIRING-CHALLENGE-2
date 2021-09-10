@@ -45,7 +45,7 @@ const Home: NextPage = () => {
               <input type="number" step=".0001" {...register("balance", { required: true })} className="block w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none input-primary text-gray-700" placeholder="Balance" />
               {errors.balance && <span className="text-red-500 pb-2">Wallet Balance is required</span>}
               <div className="block">
-                <input type="submit" className="w-full px-3 py-4 font-medium text-white bg-blue-600 rounded-lg" value="Log Me In" />
+                <input type="submit" className="w-full px-3 py-4 font-medium text-white bg-blue-600 rounded-lg cursor-pointer" value="Log Me In" />
               </div>
             </form>
             <div className="mt-4">
