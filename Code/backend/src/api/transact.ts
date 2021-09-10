@@ -15,28 +15,25 @@ export async function walletTransact(req: Request, res: Response) {
     // connect to DB
     db.connect(async (err) => {
         // connection error
-        if (err) {
-            return res.status(500).send('Internal Server Error');
-        }
+        if (err) return res.status(500).send('Internal Server Error');
 
         // declare the collection
-        const collection = await db.db("wallet").collection("accounts");
+        const walletCollection = await db.db("wallet").collection("accounts");
+        const transCollection = await db.db("wallet").collection("transactions");
 
         // check if wallet already exits
-        const existingWallet = await collection.findOne({_id: new ObjectId(walletId)});
+        const existingWallet = await walletCollection.findOne({_id: new ObjectId(walletId)});
 
         // return failure, if already exists
         if (!existingWallet) return res.status(400).send({response: 'Wallet Not Found'}); 
 
-        console.log(existingWallet.balance, body.amount);
-
-        const updatedBalance = parseInt(existingWallet.balance, 10) + parseInt(body.amount, 10) || 0;
+        const updatedBalance = parseFloat(existingWallet.balance) + parseFloat(body.amount) || 0.0000;
 
         // if balance is lower, return failure
         if ((updatedBalance) <= 0) return res.status(400).send({response: 'Insufficient Balance'});
 
         // insert new wallet
-        const walletResult = await collection.updateOne(
+        const walletResult = await walletCollection.updateOne(
             {_id: new ObjectId(walletId)},
                 {
                     $set:
@@ -49,12 +46,14 @@ export async function walletTransact(req: Request, res: Response) {
         // insert new transaction
         const transactionInfo = {
             amount: body.amount.toFixed(4),
-            reason: body.reason,
+            description: body.description,
             walletId: walletId,
+            balance: updatedBalance.toFixed(4),
+            createdDate: new Date().toISOString(),
         }
-        const transactionResult = await collection.insertOne(transactionInfo);
+        const transactionResult = await transCollection.insertOne(transactionInfo);
 
         // return the response
-        res.send({balance: updatedBalance, transactionId: transactionResult.insertedId.toHexString()});
+        res.send({balance: updatedBalance.toFixed(4), transactionId: transactionResult.insertedId.toHexString()});
     });
 }
